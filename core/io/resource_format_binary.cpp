@@ -36,6 +36,7 @@
 #include "core/io/image.h"
 #include "core/io/marshalls.h"
 #include "core/version.h"
+#include "core/os/thread.h"
 
 //#define print_bl(m_what) print_line(m_what)
 #define print_bl(m_what) (void)(m_what)
@@ -756,7 +757,15 @@ Error ResourceLoaderBinary::load() {
 				return error;
 			}
 
-			res->set_deferred(name, value);
+			//is thread
+			if(Thread::get_caller_id() != Thread::get_main_id())
+      {
+	      res->set_deferred(name, value);
+      }
+      else {
+	      res->set(name, value);
+      }
+
 		}
 #ifdef TOOLS_ENABLED
 		res->set_edited(false);
