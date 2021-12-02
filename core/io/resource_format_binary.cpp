@@ -757,14 +757,13 @@ Error ResourceLoaderBinary::load() {
 				return error;
 			}
 
-			//is thread
 			if(Thread::get_caller_id() != Thread::get_main_id())
-      {
-	      res->set_deferred(name, value);
-      }
-      else {
-	      res->set(name, value);
-      }
+			{
+				res->set_deferred(name, value);
+			}
+			else {
+				res->set(name, value);
+			}
 
 		}
 #ifdef TOOLS_ENABLED
